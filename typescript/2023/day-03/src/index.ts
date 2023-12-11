@@ -16,7 +16,9 @@ export const puzzle1 = (data: string[]) => {
         if (!isPartNumber) {
           isPartNumber = hasSymbolNeighbour(data, i, j);
         }
-      } else {
+      }
+
+      if (!isDigit(data[i][j]) || j === data[0].length - 1) {
         if (isPartNumber) {
           isPartNumber = false;
           partNumbers.push(s);
@@ -31,15 +33,13 @@ export const puzzle1 = (data: string[]) => {
 export const puzzle2 = (data: string[]) => {
   const numbersAroundAGear = {} as Record<string, number[]>;
   let s = "";
-  let isPartNumber = false;
   for (let i = 0; i < data.length; i += 1) {
     for (let j = 0; j < data[0].length; j += 1) {
       if (isDigit(data[i][j])) {
         s += data[i][j];
-        if (!isPartNumber) {
-          isPartNumber = hasSymbolNeighbour(data, i, j);
-        }
-      } else if (s.length > 0) {
+      }
+
+      if ((!isDigit(data[i][j]) || j + 1 === data[0].length) && s.length > 0) {
         getStarNeighbours(data, j - s.length, j - 1, i).forEach((star) => {
           console.log(star, s);
           console.log(`col1: ${j - s.length}; col2: ${j - 1}; line: ${i}`);

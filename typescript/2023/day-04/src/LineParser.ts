@@ -9,7 +9,7 @@ export class LineParser {
 
   process(): Card {
     const [fp, lp] = this.line.split(":");
-    const cardId = parseInt(fp.split(" ")[1]);
+    const cardId = parseInt(fp.replace(/ /g, "").split("Card")[1]);
     const [winningNumbersStr, inputNumbersStr] = lp.split("|");
     return {
       cardId,
@@ -23,6 +23,8 @@ export class LineParser {
         .split(" ")
         .filter((item) => item !== "")
         .map((x) => parseInt(x)),
+      copies: 1,
+      processed: 0,
     };
   }
 }

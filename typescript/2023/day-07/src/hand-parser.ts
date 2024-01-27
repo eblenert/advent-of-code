@@ -63,65 +63,25 @@ export class HandParser {
   }
 
   parseHandTypeWithJoker() {
-    this.parseHandType();
+    const jokers = this.hand["J"] || 0;
+    delete this.hand["J"];
 
-    const cards = Object.entries(this.hand).map((x) => x[1]);
-
-    const jokers = Object.entries(this.hand).reduce((acc, current) => {
-      return acc + (current[0] === "J" ? current[1] : 0);
-    }, 0);
-
-    console.log(`Jokers: ${jokers}`, `handType ${this.handType}`, cards);
-
-    if (jokers === 1) {
-      if (cards.length === 2) {
-        this.handType = HAND_TYPE.FIVE_OF_A_KIND;
-      }
-
-      if (cards.length === 3) {
-        if (cards.indexOf(3) !== -1) {
-          this.handType = HAND_TYPE.FOUR_OF_A_KIND;
-        } else {
-          this.handType = HAND_TYPE.FULL_HOUSE;
+    const highestOccurenceCard = Object.entries(this.hand).reduce(
+      (acc, current) => {
+        if (current[1] > acc.value) {
+          acc = {
+            id: current[0],
+            value: current[1],
+          };
         }
-      }
+        return acc;
+      },
+      { id: "2", value: 0 }
+    );
 
-      if (cards.length === 4) {
-        this.handType = HAND_TYPE.THREE_OF_A_KIND;
-      }
+    this.hand[highestOccurenceCard.id] += jokers;
 
-      if (cards.length === 5) {
-        this.handType = HAND_TYPE.ONE_PAIR;
-      }
-    }
-
-    if (jokers === 2) {
-      if (cards.length === 2) {
-        this.handType = HAND_TYPE.FIVE_OF_A_KIND;
-      }
-
-      if (cards.length === 3) {
-        this.handType = HAND_TYPE.FOUR_OF_A_KIND;
-      }
-
-      if (cards.length === 4) {
-        this.handType = HAND_TYPE.THREE_OF_A_KIND;
-      }
-    }
-
-    if (jokers === 3) {
-      if (cards.length === 2) {
-        this.handType = HAND_TYPE.FIVE_OF_A_KIND;
-      }
-      if (cards.length === 3) {
-        this.handType = HAND_TYPE.FOUR_OF_A_KIND;
-      }
-    }
-
-    if (jokers === 4) {
-      this.handType = HAND_TYPE.FIVE_OF_A_KIND;
-    }
-
+    this.parseHandType();
     return this;
   }
 }

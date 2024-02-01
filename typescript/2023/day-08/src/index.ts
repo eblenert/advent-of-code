@@ -1,9 +1,9 @@
 import { readLinesFromFile } from "../../utils/read-lines-from-file";
+import { Choice } from "./Choice";
 import { MapDirections } from "./types";
 
 export const puzzle1 = (data: string[]) => {
-  const directionList = data[0];
-
+  const directionChoice = new Choice(data[0]);
   const directionMap = data.slice(2).reduce((acc, line) => {
     const res = /^([A-Z]{3}) = \(([A-Z]{3}), ([A-Z]{3})\)$/.exec(line);
 
@@ -12,6 +12,29 @@ export const puzzle1 = (data: string[]) => {
     }
     return acc;
   }, {} as MapDirections);
+
+  console.log(directionMap);
+  let reachedEndLocation = false;
+  let depletedChoices = false;
+  let location = directionMap["AAA"];
+  let i;
+  for (i = 0; !(reachedEndLocation && depletedChoices); i += 1) {
+    const direction = directionChoice.next();
+    console.log(location, direction);
+
+    if (direction.done) {
+      depletedChoices = true;
+      directionChoice.reset();
+    }
+
+    if (location[direction.value] === "ZZZ") {
+      reachedEndLocation = true;
+    } else {
+      location = directionMap[location[direction.value]];
+    }
+  }
+
+  return i;
 };
 
 export const puzzle2 = (data: string[]) => {};

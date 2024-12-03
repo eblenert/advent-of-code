@@ -18,32 +18,33 @@ const occurencesInList = (list: number[], value: number): number => {
 };
 
 export const puzzle1 = (data: string[]) => {
-  const colA: Array<number> = [];
-  const colB: Array<number> = [];
-  data.forEach((line) => {
-    const [a, b] = line.split("   ");
-    colA.push(parseInt(a, 10));
-    colB.push(parseInt(b, 10));
-  });
-  colA.sort();
-  colB.sort();
-  let sum = 0;
+  const [colA, colB] = data
+    .reduce(
+      (acc, current) => {
+        const [a, b] = current.split("   ");
+        acc[0].push(parseInt(a, 10));
+        acc[1].push(parseInt(b, 10));
+        return acc;
+      },
+      [[], []] as Array<Array<number>>
+    )
+    .map((col) => col.sort());
 
-  for (let i = 0; i < colA.length; i += 1) {
-    sum += diff(colA[i], colB[i]);
-  }
-
-  return sum;
+  return colA.reduce((acc, current, index) => {
+    return acc + diff(current, colB[index]);
+  }, 0);
 };
 
 export const puzzle2 = (data: string[]) => {
-  const colA: Array<number> = [];
-  const colB: Array<number> = [];
-  data.forEach((line) => {
-    const [a, b] = line.split("   ");
-    colA.push(parseInt(a, 10));
-    colB.push(parseInt(b, 10));
-  });
+  const [colA, colB] = data.reduce(
+    (acc, current) => {
+      const [a, b] = current.split("   ");
+      acc[0].push(parseInt(a, 10));
+      acc[1].push(parseInt(b, 10));
+      return acc;
+    },
+    [[], []] as Array<Array<number>>
+  );
 
   return colA.reduce((acc, current) => {
     return acc + current * occurencesInList(colB, current);

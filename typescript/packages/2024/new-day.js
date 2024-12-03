@@ -12,7 +12,7 @@ async function listDirectories(pth) {
 async function main() {
   const dirList = await listDirectories("./src");
   const nextIndex = dirList.length + 1;
-  const nextDir = `day-${nextIndex > 10 ? nextIndex : "0" + nextIndex}`;
+  const nextDir = `src/day-${nextIndex > 10 ? nextIndex : "0" + nextIndex}`;
   await mkdir(`${nextDir}`, {
     recursive: true,
   });
@@ -20,7 +20,7 @@ async function main() {
   await writeFile(
     `${nextDir}/index.ts`,
     `
-import { readLinesFromFile } from "../../utils/read-lines-from-file";
+import { readLinesFromFile } from "../../../lib/utils/read-lines-from-file";
 
 export const puzzle1 = (data: string[]) => {};
 

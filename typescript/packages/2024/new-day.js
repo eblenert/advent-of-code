@@ -20,7 +20,7 @@ async function main() {
   await writeFile(
     `${nextDir}/index.ts`,
     `
-import { readLinesFromFile } from "../../../lib/utils/read-lines-from-file";
+import { readLinesFromFile } from "@lib/utils/read-lines-from-file";
 
 export const puzzle1 = (data: string[]) => {};
 

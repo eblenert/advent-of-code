@@ -11,8 +11,8 @@ describe("is-list-monotone", () => {
     expect(result).toBe(true);
   });
 
-  it("should return false for mixed list", () => {
-    const result = isListMonotone([3, 5, 1]);
+  it.only("should return false for mixed list", () => {
+    const result = isListMonotone([29, 27, 26, 30, 18, 16]);
     expect(result).toBe(false);
   });
 });

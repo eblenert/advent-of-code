@@ -1,5 +1,5 @@
 import { multiplication, readLinesFromFile, sum } from "@lib/utils";
-const parseBase10 = (x: string) => parseInt(x, 10);
+export const parseBase10 = (x: string) => parseInt(x, 10);
 const multRegex = /mul\((\d{1,3},\d{1,3})\)/g;
 const multEnabledRegex = /mul\((\d{1,3},\d{1,3})\)|do\(\)|don\'t\(\)/g;
 

@@ -21,28 +21,28 @@ func Part1(inputData []string) int {
 
 	timePointingToZero := 0
 	for _, move := range moves {
-		var direction int
+		direction := 1
 
 		if move.Direction == 'L' {
-			direction = 1
-		} else {
 			direction = -1
 		}
 
 		oldValue := dial
 		dial = dial + direction*move.Amount
 
+		for dial > 99 {
+			fmt.Printf("dial value is over 99: %d. overflow: %d\n", dial, dial-100)
+			dial = dial - 100
+		}
+
+		for dial < 0 {
+			fmt.Printf("dial value is under 0: %d. overflow: %d\n", dial, dial+100)
+			dial = dial + 100
+		}
+
 		if dial == 0 {
-			timePointingToZero++
-		}
-
-		if dial > 99 {
-			fmt.Printf("dial value is over 99: %d. overflow: %d\n", dial, dial-99)
-			dial = dial - 99
-		}
-
-		if dial < 0 {
-			dial = 99 + dial
+			fmt.Println("dial is zero")
+			timePointingToZero += 1
 		}
 
 		fmt.Printf("Old value: %d. Direction: %c, Amount: %d. New value: %d\n", oldValue, move.Direction, move.Amount, dial)
@@ -56,6 +56,9 @@ func MapToMove(input []string) ([]Move, error) {
 	out := make([]Move, 0, len(input))
 
 	for _, v := range input {
+		if len(v) == 0 {
+			continue
+		}
 		amount, err := strconv.Atoi(v[1:])
 		if err != nil {
 			return nil, err

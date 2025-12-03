@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 
-	lib "github.com/eblenert/advent-of-code/golang/lib/input"
+	input "github.com/eblenert/advent-of-code/golang/lib/input"
 )
 
 func main() {
-	data, err := lib.ReadFromFile("../../../../data/2025/day-01/input")
+	data, err := input.ReadFromFile("../../../../data/2025/day-01/input")
 	if err != nil {
 		fmt.Println("somethinf went wrong")
 		fmt.Println(err)

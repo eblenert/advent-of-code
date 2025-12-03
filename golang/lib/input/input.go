@@ -18,10 +18,15 @@ func ReadFromFile(filePath string) ([]string, error) {
 	return strings.Split(string(data), "\n"), nil
 }
 
-func ReadInputData(year int, day int) ([]string, error) {
+func ReadInputData(year int, day int, example bool) ([]string, error) {
 	_, file, _, _ := runtime.Caller(0)
 	rootDir := filepath.Clean(filepath.Join(filepath.Dir(file), "..", "..", ".."))
-	inputPath := fmt.Sprintf("%s/data/%d/day-%02d/input", rootDir, year, day)
+
+	filename := "input"
+	if example {
+		filename = "example"
+	}
+	inputPath := fmt.Sprintf("%s/data/%d/day-%02d/%s", rootDir, year, day, filename)
 
 	content, err := os.ReadFile(inputPath)
 

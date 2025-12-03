@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	data, err := input.ReadInputData(2015, 2)
+	data, err := input.ReadInputData(2015, 2, false)
 
 	fmt.Println(os.Getwd())
 
